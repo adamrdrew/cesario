@@ -1,5 +1,13 @@
 import urllib.request
 import logging
+import numpy as np
+from enum import Enum
+from sklearn.feature_extraction.text import CountVectorizer
+
+class Author(Enum):
+    JONATHAN_SWIFT = 0
+    WASHINGTON_IRVING = 1
+
 
 class Book:
     title = ""
@@ -31,7 +39,7 @@ class Book:
                 break
             if found_content:
                 out.append(line)
-        return out 
+        return "\n".join(out)
 
 class Gutenburg:
     LOG = "log/gutenberg.log"
@@ -77,11 +85,61 @@ class BookList:
 
 
 
-a_modest_proposal = Book("A Modest Proposal", "Jonathan Swift", "http://www.gutenberg.org/files/1080/1080-0.txt")
-gullivers_travels = Book("Gulliver's Travels", "Jonathan Swift", "https://www.gutenberg.org/cache/epub/17157/pg17157.txt")
+
+a_modest_proposal = Book("A Modest Proposal", Author.JONATHAN_SWIFT, "http://www.gutenberg.org/files/1080/1080-0.txt")
+gullivers_travels = Book("Gulliver's Travels", Author.JONATHAN_SWIFT, "https://www.gutenberg.org/cache/epub/17157/pg17157.txt")
 
 book_list = BookList()
 book_list.add_book(a_modest_proposal)
 book_list.add_book(gullivers_travels)
 book_list.download_books()
 
+FUNCTION_WORDS = ["a", "able", "aboard", "about", "above", "absent",
+"according" , "accordingly", "across", "after", "against",
+"ahead", "albeit", "all", "along", "alongside", "although",
+"am", "amid", "amidst", "among", "amongst", "amount", "an",
+"and", "another", "anti", "any", "anybody", "anyone",
+"anything", "are", "around", "as", "aside", "astraddle",
+"astride", "at", "away", "bar", "barring", "be", "because",
+"been", "before", "behind", "being", "below", "beneath",
+"beside", "besides", "better", "between", "beyond", "bit",
+"both", "but", "by", "can", "certain", "circa", "close",
+"concerning", "consequently", "considering", "could",
+"couple", "dare", "deal", "despite", "down", "due", "during",
+"each", "eight", "eighth", "either", "enough", "every",
+"everybody", "everyone", "everything", "except", "excepting",
+"excluding", "failing", "few", "fewer", "fifth", "first",
+"five", "following", "for", "four", "fourth", "from", "front",
+"given", "good", "great", "had", "half", "have", "he",
+"heaps", "hence", "her", "hers", "herself", "him", "himself",
+"his", "however", "i", "if", "in", "including", "inside",
+"instead", "into", "is", "it", "its", "itself", "keeping",
+"lack", "less", "like", "little", "loads", "lots", "majority",
+"many", "masses", "may", "me", "might", "mine", "minority",
+"minus", "more", "most", "much", "must", "my", "myself",
+"near", "need", "neither", "nevertheless", "next", "nine",
+"ninth", "no", "nobody", "none", "nor", "nothing",
+"notwithstanding", "number", "numbers", "of", "off", "on",
+"once", "one", "onto", "opposite", "or", "other", "ought",
+"our", "ours", "ourselves", "out", "outside", "over", "part",
+"past", "pending", "per", "pertaining", "place", "plenty",
+"plethora", "plus", "quantities", "quantity", "quarter",
+"regarding", "remainder", "respecting", "rest", "round",
+"save", "saving", "second", "seven", "seventh", "several",
+"shall", "she", "should", "similar", "since", "six", "sixth",
+"so", "some", "somebody", "someone", "something", "spite",
+"such", "ten", "tenth", "than", "thanks", "that", "the",
+"their", "theirs", "them", "themselves", "then", "thence",
+"therefore", "these", "they", "third", "this", "those",
+"though", "three", "through", "throughout", "thru", "thus",
+"till", "time", "to", "tons", "top", "toward", "towards",
+"two", "under", "underneath", "unless", "unlike", "until",
+"unto", "up", "upon", "us", "used", "various", "versus",
+"via", "view", "wanting", "was", "we", "were", "what",
+"whatever", "when", "whenever", "where", "whereas",
+"wherever", "whether", "which", "whichever", "while",
+"whilst", "who", "whoever", "whole", "whom", "whomever",
+"whose", "will", "with", "within", "without", "would", "yet",
+"you", "your", "yours", "yourself", "yourselves"]
+
+extractor = CountVectorizer(vocabulary=FUNCTION_WORDS)
