@@ -8,6 +8,8 @@ class Book:
     CONTENT_START = "*** START OF THE PROJECT GUTENBERG EBOOK"
     CONTENT_END = "*** END OF THE PROJECT GUTENBERG EBOOK"
 
+    GUTENBURG_DELM = "***"
+
     def __init__(self, title:str, author: str, url:str):
         self.title = title
         self.author = author
@@ -22,10 +24,10 @@ class Book:
         out = []
         found_content = False
         for line in self.raw_lines():
-            if self.CONTENT_START in line:
+            if line.startswith(self.GUTENBURG_DELM) and not found_content:
                 found_content = True
                 continue
-            if self.CONTENT_END in line:
+            if line.startswith(self.GUTENBURG_DELM) and found_content:
                 break
             if found_content:
                 out.append(line)

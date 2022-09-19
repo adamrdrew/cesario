@@ -50,4 +50,7 @@ class FunctionWords:
 "you", "your", "yours", "yourself", "yourselves"]
 
     def __init__(self):
-        self.extractor = CountVectorizer(vocabulary=self.words)
+        self.extractor = CountVectorizer(vocabulary=self.WORDS)
+
+    def get_exactractor(self):
+        return self.extractor
