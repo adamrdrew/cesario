@@ -14,4 +14,4 @@ class Classifier:
         
 
     def get_scores(self, documents, classes):
-        return cross_val_score(self.pipeline, documents, classes, cv=5,scoring='f1_micro')
+        return cross_val_score(self.pipeline, documents, classes, scoring='f1_weighted', cv=16)

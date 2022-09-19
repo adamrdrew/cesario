@@ -30,7 +30,6 @@ def main():
     book_list.add_book(Book("A Christmas Carol", Author.CHARLES_DICKENS, "https://www.gutenberg.org/cache/epub/19337/pg19337.txt"))
     book_list.add_book(Book("American Notes", Author.CHARLES_DICKENS, "https://www.gutenberg.org/files/675/675-0.txt"))
 
-
     book_list.add_book(Book("The Legend of Sleepy Hollow", Author.WASHINGTON_IRVING, "https://www.gutenberg.org/cache/epub/41/pg41.txt"))
     book_list.add_book(Book("Rip Van Winkle", Author.WASHINGTON_IRVING, "https://www.gutenberg.org/files/60976/60976-0.txt"))
     book_list.add_book(Book("The Sketch Book of Geoffrey Crayon", Author.WASHINGTON_IRVING, "https://www.gutenberg.org/files/2048/2048-0.txt"))
@@ -75,7 +74,40 @@ def main():
     book_list.add_book(Book("The White Company", Author.ARTHUR_CONAN_DOYLE, "https://www.gutenberg.org/files/903/903-0.txt"))
     book_list.add_book(Book("The Great Boer War", Author.ARTHUR_CONAN_DOYLE, "https://www.gutenberg.org/files/3069/3069-0.txt"))
 
+    book_list.add_book(Book("The Alchemist", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/4081/pg4081.txt"))
+    book_list.add_book(Book("Volpone", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/4039/pg4039.txt"))
+    book_list.add_book(Book("Every Man in his Humour", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/5333/pg5333.txt"))
+    book_list.add_book(Book("Bartholomew Fair", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/49461/pg49461.txt"))
+    book_list.add_book(Book("Epiceone", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/4011/pg4011.txt"))
+    book_list.add_book(Book("Discoveries made upon men", Author.BEN_JONSON, "https://www.gutenberg.org/files/5134/5134-0.txt"))
+    book_list.add_book(Book("Sejanus", Author.BEN_JONSON, "https://www.gutenberg.org/files/5232/5232-0.txt"))
+    book_list.add_book(Book("The Devil is an Ass", Author.BEN_JONSON, "https://www.gutenberg.org/files/50150/50150-0.txt"))
+    book_list.add_book(Book("Poetaster", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/5166/pg5166.txt"))
+    book_list.add_book(Book("Cynthia's Revels", Author.BEN_JONSON, "https://www.gutenberg.org/cache/epub/3771/pg3771.txt"))
 
+    book_list.add_book(Book("Paradise Lost", Author.JOHN_MILTON, "https://www.gutenberg.org/cache/epub/26/pg26.txt"))
+    book_list.add_book(Book("Areopagitica", Author.JOHN_MILTON, "https://www.gutenberg.org/cache/epub/608/pg608.txt"))
+    book_list.add_book(Book("Poetical Works", Author.JOHN_MILTON, "https://www.gutenberg.org/cache/epub/1745/pg1745.txt"))
+    book_list.add_book(Book("Comus", Author.JOHN_MILTON, "https://www.gutenberg.org/files/19819/19819-0.txt"))
+    book_list.add_book(Book("Paradise Regained", Author.JOHN_MILTON, "https://www.gutenberg.org/cache/epub/58/pg58.txt"))
+    book_list.add_book(Book("Minor Poems", Author.JOHN_MILTON, "https://www.gutenberg.org/cache/epub/31706/pg31706.txt"))
+
+    book_list.add_book(Book("Romeo and Juliet", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/1513/pg1513.txt"))
+    book_list.add_book(Book("Hamlet", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/1524/pg1524.txt"))
+    book_list.add_book(Book("Midsummer's Night", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/files/1514/1514-0.txt"))
+    book_list.add_book(Book("Merchant of Venice", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/1515/pg1515.txt"))
+    book_list.add_book(Book("As you like it", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/1121/pg1121.txt"))
+    book_list.add_book(Book("Comedy of Errors", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/files/23046/23046-0.txt"))
+    book_list.add_book(Book("Taming of the Shrew", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/1508/pg1508.txt"))
+    book_list.add_book(Book("Measure for Measure", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/23045/pg23045.txt"))
+    book_list.add_book(Book("Tempest", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/files/23042/23042-0.txt"))
+    book_list.add_book(Book("Macbeth", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/2264/pg2264.txt"))
+    book_list.add_book(Book("Othello", Author.WILLIAM_SHAKESPEARE, "https://www.gutenberg.org/cache/epub/1531/pg1531.txt"))
+
+    book_list.add_book(Book("Poems vol 1", Author.JOHN_DONNE, "https://www.gutenberg.org/files/48688/48688-0.txt"))
+    book_list.add_book(Book("Poems vol 2", Author.JOHN_DONNE, "https://www.gutenberg.org/files/48772/48772-0.txt"))
+    book_list.add_book(Book("Paradoxes and Problems", Author.JOHN_DONNE, "https://www.gutenberg.org/files/61783/61783-0.txt"))
+    book_list.add_book(Book("Letters", Author.JOHN_DONNE, "https://www.gutenberg.org/cache/epub/37387/pg37387.txt"))
 
 
 

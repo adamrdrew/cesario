@@ -4,9 +4,7 @@ class Book:
     author = ""
     url = ""
     raw_text = ""
-
-    CONTENT_START = "*** START OF THE PROJECT GUTENBERG EBOOK"
-    CONTENT_END = "*** END OF THE PROJECT GUTENBERG EBOOK"
+    content = ""
 
     GUTENBURG_DELM = "***"
 
@@ -20,7 +18,7 @@ class Book:
         return self.raw_text.split("\n")
     
     #Gets the lines of the text without the header and footer
-    def content_lines(self) -> list[str]:
+    def make_content_lines(self) -> str:
         out = []
         found_content = False
         for line in self.raw_lines():
@@ -32,3 +30,23 @@ class Book:
             if found_content:
                 out.append(line)
         return "\n".join(out)
+
+    #Memoized getter for content_lines
+    def content_lines(self) -> list[str]:
+        if len(self.content) == 0:
+            self.content = self.make_content_lines()
+        return self.content
+
+    #Gets the size (length) of the content
+    def size(self) -> int:
+        return len(self.content_lines())
+
+    #Splits the book by a size and returns that as a new book
+    def split(self, size: int): 
+        new_content = self.content_lines()[:size]
+        remainder = self.content_lines()[size:]
+        self.content = remainder
+        newbook = Book(self.title, self.author, self.url)
+        newbook.content = new_content
+        return newbook
+        

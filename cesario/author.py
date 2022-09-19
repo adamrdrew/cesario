@@ -7,3 +7,7 @@ class Author(Enum):
     MARK_TWAIN = 3
     OSCAR_WILDE = 4
     ARTHUR_CONAN_DOYLE = 5
+    BEN_JONSON = 6
+    JOHN_MILTON = 7
+    WILLIAM_SHAKESPEARE = 8
+    JOHN_DONNE = 9
