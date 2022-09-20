@@ -1,17 +1,23 @@
+import urllib.request
+import codecs
+import os
 
 class Book:
-    title = ""
-    author = ""
-    url = ""
     raw_text = ""
     content = ""
 
     GUTENBURG_DELM = "***"
 
-    def __init__(self, title:str, author: str, url:str):
-        self.title = title
-        self.author = author
-        self.url = url
+    def __init__(self, opts:dict):
+        self.is_shakespeare = opts["is_shakespeare"]
+        if "url" in opts:
+            self.source = opts["url"]
+            self.source_is_local = False
+        if "file" in opts:
+            self.source = opts["file"]
+            self.source_is_local = True
+        if "url" not in opts and "file" not in opts:
+            raise Exception("Book must have a url or file")
 
     #Gets the lines of the text exactly as they are in the file
     def raw_lines(self) -> list[str]:
@@ -46,7 +52,44 @@ class Book:
         new_content = self.content_lines()[:size]
         remainder = self.content_lines()[size:]
         self.content = remainder
-        newbook = Book(self.title, self.author, self.url)
+        newbook = Book({"is_shakespeare": self.is_shakespeare, "url": self.source})
         newbook.content = new_content
         return newbook
         
+    def attribute_author(self, slice_size:int, classifier) -> list[dict[str: int]]:
+        slice_offset = 0
+        results = []
+        iterations = round(len(self.content_lines()) / slice_size)
+        for i in range(iterations):
+            slice_text = self.content_lines()[slice_offset:slice_offset+slice_size]
+            prediction = classifier.predict_with_probability(slice_text)
+            prediction_classes = prediction[0]
+            is_shakespeare = prediction_classes[1] > prediction_classes[0]
+            result = {
+                "slice_number": i,
+                "is_shakespeare": is_shakespeare,
+                "is_shakespeare_probability": prediction_classes[1],
+                "is_not_shakespeare_probability": prediction_classes[0]
+            }
+            results.append(result)
+            slice_offset += slice_size
+        return results
+    
+    def load(self):
+        if self.source_is_local:
+            self.__load_from_file()
+        else:
+            self.__load_from_url()
+    
+    def __load_from_file(self):
+        txtfile_full_path = os.path.join("books/", self.source)
+        f = codecs.open(txtfile_full_path, 'r', encoding='latin-1')
+        self.raw_text = f.read()
+        f.close()
+
+    def __load_from_url(self):
+        try:
+            with urllib.request.urlopen(self.source) as f:
+                self.raw_text =  f.read().decode("utf-8")
+        except urllib.error.URLError as e:
+            print("Failed to download book " + self.source + " with error " + e.reason)

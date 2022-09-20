@@ -1,13 +1,8 @@
 from enum import Enum
 
-class Author(Enum):
-    JONATHAN_SWIFT = 0
-    WASHINGTON_IRVING = 1
-    CHARLES_DICKENS = 2
-    MARK_TWAIN = 3
-    OSCAR_WILDE = 4
-    ARTHUR_CONAN_DOYLE = 5
-    BEN_JONSON = 6
-    JOHN_MILTON = 7
-    WILLIAM_SHAKESPEARE = 8
-    JOHN_DONNE = 9
+
+
+Authors = {
+    "NOT_SHAKESPEARE": 0,
+    "SHAKESPEARE": 1,
+}

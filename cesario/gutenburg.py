@@ -2,7 +2,6 @@ import urllib.request
 
 import numpy as np
 
-from book import Book
 from log import Log
 
 class Gutenburg:
@@ -10,7 +9,7 @@ class Gutenburg:
     def __init__(self):
         self.log = Log(self.LOG)
     
-    def download_book(self, book: Book) -> Book:
+    def download_book(self, book):
         book.raw_text = self.download(book.url)
         return book
 
