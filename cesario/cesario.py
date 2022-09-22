@@ -96,8 +96,8 @@ def print_ensemble_results(result):
 
 #Get a prediction from the ensemble for a given file or URL
 @cli.command("predict")
-@click.option('--file', default="", prompt="Path to file", help='Predict the authorship of a local file.')
-@click.option('--url', default="", prompt="URL of file on a web server", help='Predict the authorship of a file on a web server.')
+@click.option('--file', default="",  help='Predict the authorship of a local file.')
+@click.option('--url', default="",  help='Predict the authorship of a file on a web server.')
 def predict(file:str, url:str):
     if file == "" and url == "":
         print("Please specify a file or URL.")
