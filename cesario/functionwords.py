@@ -1,4 +1,4 @@
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 class FunctionWords:
     WORDS = ["a", "able", "aboard", "about", "above", "absent",
@@ -54,3 +54,7 @@ class FunctionWords:
 
     def get_exactractor(self):
         return self.extractor
+
+class FunctionWordsTFIDF(FunctionWords):
+    def __init__(self):
+        self.extractor = TfidfVectorizer(vocabulary=self.WORDS)

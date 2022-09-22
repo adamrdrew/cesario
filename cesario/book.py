@@ -1,5 +1,4 @@
 import urllib.request
-import codecs
 import os
 
 class Book:
@@ -24,7 +23,7 @@ class Book:
         return self.raw_text.split("\n")
     
     #Gets the lines of the text without the header and footer
-    def make_content_lines(self) -> str:
+    def __make_content_lines(self) -> str:
         out = []
         found_content = False
         for line in self.raw_lines():
@@ -36,6 +35,11 @@ class Book:
             if found_content:
                 out.append(line)
         return "\n".join(out)
+
+    def make_content_lines(self) -> str:
+        start = self.raw_text.find("*** START")
+        end = self.raw_text.find("*** END")
+        return self.raw_text[start:end].replace("\n", " ")
 
     #Memoized getter for content_lines
     def content_lines(self) -> list[str]:
@@ -82,10 +86,9 @@ class Book:
             self.__load_from_url()
     
     def __load_from_file(self):
-        txtfile_full_path = os.path.join("books/", self.source)
-        f = codecs.open(txtfile_full_path, 'r', encoding='latin-1')
-        self.raw_text = f.read()
-        f.close()
+        txtfile_full_path = os.path.join(self.source)
+        with open(txtfile_full_path) as f:
+            self.raw_text = f.read()
 
     def __load_from_url(self):
         try:

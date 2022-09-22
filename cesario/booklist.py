@@ -13,7 +13,24 @@ class BookList:
         for book in self.book_list:
             book.load()
 
-    def get_books_and_classes(self):
+    def get_books_and_classes(self, split_docs: bool):
+        if split_docs:
+            return self.get_books_and_classes_split()
+        else:
+            return self.get_books_and_classes_nosplit()
+
+
+    def get_books_and_classes_nosplit(self):
+        classes = []
+        books = []
+        classes = []
+        for book in self.book_list:
+            books.append(book.content_lines())
+            classes.append(int(book.is_shakespeare))
+        return books, np.array(classes, dtype='int')
+
+    def get_books_and_classes_split(self):
+        print("     * Splitting docs into 65k chunks")
         classes = []
         books = []
         classes = []
