@@ -37,14 +37,12 @@ $ python cesario/cesario.py train
 
 The ensemble models are all trained with the training data set described above in the Training Data section.
 
-### Training Document Splitting
-We offer two different training data ingestion methods. One method processes and indexes the training documents in whole. The other method splits the training data into sub documents of 65k characters or less. 
 
 ## Validation
 We offer two validation systems - test train split with manual validation and cross validation. Test train split is disabled by default because cross validation always produces roughly the same results, but you are free to enable it by uncommenting it from the `validate` method.
 
 ```
-$ python cesario/cesario.py train ; python cesario/cesario.py validate ; python cesario/cesario.py train --split-docs ; python cesario/cesario.py validate --split-docs
+$ python cesario/cesario.py train ; python cesario/cesario.py validate
 Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
 --------------------------------------------------------
 Training ensemble. This will take a while...
@@ -94,68 +92,157 @@ Validating classifiers. This will take a while...
 -----
  Cross Validation for: Random Forest with Char NGram and TFIDF Vectorizer
  Accuracy: 0.96 (+/- 0.02)
-Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
---------------------------------------------------------
-Training ensemble. This will take a while...
- * Getting training data...
-     * Splitting docs into 65k chunks
- * Training individual classifiers...
-     * Training SVM with Function Words and Count Vectorizer...
-     * Saving SVM with Function Words and Count Vectorizer...
-     * Training SVM with Function Words and TFIDF Vectorizer...
-     * Saving SVM with Function Words and TFIDF Vectorizer...
-     * Training Random Forest with Function Words and Count Vectorizer...
-     * Saving Random Forest with Function Words and Count Vectorizer...
-     * Training Random Forest with Function Words and TFIDF Vectorizer...
-     * Saving Random Forest with Function Words and TFIDF Vectorizer...
-     * Training SVM with Char NGram and Count Vectorizer...
-     * Saving SVM with Char NGram and Count Vectorizer...
-     * Training SVM with Char NGram and TFIDF Vectorizer...
-     * Saving SVM with Char NGram and TFIDF Vectorizer...
-     * Training Random Forest with Char NGram and Count Vectorizer...
-     * Saving Random Forest with Char NGram and Count Vectorizer...
-     * Training Random Forest with Char NGram and TFIDF Vectorizer...
-     * Saving Random Forest with Char NGram and TFIDF Vectorizer...
-Done!
-Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
---------------------------------------------------------
-Validating classifiers. This will take a while...
-     * Splitting docs into 65k chunks
------
- Cross Validation for: SVM with Function Words and Count Vectorizer
- Accuracy: 0.95 (+/- 0.21)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: SVM with Function Words and TFIDF Vectorizer
- Accuracy: 0.97 (+/- 0.04)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: Random Forest with Function Words and Count Vectorizer
- Accuracy: 0.95 (+/- 0.07)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: Random Forest with Function Words and TFIDF Vectorizer
- Accuracy: 0.95 (+/- 0.06)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: SVM with Char NGram and Count Vectorizer
- Accuracy: 0.96 (+/- 0.03)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: SVM with Char NGram and TFIDF Vectorizer
- Accuracy: 0.96 (+/- 0.04)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: Random Forest with Char NGram and Count Vectorizer
- Accuracy: 0.97 (+/- 0.02)
-     * Splitting docs into 65k chunks
------
- Cross Validation for: Random Forest with Char NGram and TFIDF Vectorizer
- Accuracy: 0.96 (+/- 0.03)
 ```
 
-## Results
+## Manual Testing
+We provide a set of test data that is not derived from the training set that you can test manually. These include plays by Shakespeare along with works by near contempories.
 
+```bash
+$ for i in testing/shakespeare/*.txt; do python cesario/cesario.py predict --file $i; done 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook of A Midsummer Night’s Dream, by William Shakespeare
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: True
+     * Mean Probability: 0.61
+     * Concordance: 99.375
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook of Macbeth, by William Shakespeare
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: True
+     * Mean Probability: 0.58
+     * Concordance: 99.25
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg EBook of The Tempest, by William Shakespeare
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: True
+     * Mean Probability: 0.61
+     * Concordance: 99.25
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook of Romeo and Juliet, by William Shakespeare
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: True
+     * Mean Probability: 0.74
+     * Concordance: 99.0
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook of Hamlet, by William Shakespeare
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: True
+     * Mean Probability: 0.65
+     * Concordance: 99.375
+ 
+(cesario) [13:31] adamdrew @ adamwork: ~/Development/cesario [master]: Up-to-date
+$ for i in testing/other/*.txt; do python cesario/cesario.py predict --file $i; done 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook, The Beggars Opera, by John Gay
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.77
+     * Concordance: 100.0
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg EBook of The Works of Aphra Behn, by Aphra Behn
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.96
+     * Concordance: 99.75
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg EBook of The Quiet Life, by Various
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.91
+     * Concordance: 100.0
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook of The Pilgrim’s Progress, by John Bunyan
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.88
+     * Concordance: 100.0
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg EBook of The Discovery of Guiana, by Sir Walter Raleigh
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.94
+     * Concordance: 100.0
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg EBook of Diary of Samuel Pepys, August/September 1666
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.92
+     * Concordance: 100.0
+ 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg EBook of No Cross, No Crown, by William Penn
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.97
+     * Concordance: 100.0
+ 
+(cesario) [13:32] adamdrew @ adamwork: ~/Development/cesario [master]: Up-to-date
+$ 
+```
 
-## Sources
+## Predictions
+You can get predictions either from a local file or a URL that houses a plain text file
+
+```
+$ python cesario/cesario.py predict --file testing/shakespeare/1514-0.txt 
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+The Project Gutenberg eBook of A Midsummer Night’s Dream, by William Shakespeare
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: True
+     * Mean Probability: 0.61
+     * Concordance: 99.375
+ 
+(cesario) [13:34] adamdrew @ adamwork: ~/Development/cesario [master]: Modified
+$ python cesario/cesario.py predict --url https://www.gutenberg.org/cache/epub/25063/pg25063.txt
+Cesario v0.1.0 - 'Disguise, I see thou art a wickedness'
+--------------------------------------------------------
+Ensemble Results:
+-----------------------------
+     * Is Shakespeare: False
+     * Mean Probability: 0.78
+     * Concordance: 100.0
+```
+
+## Results 
+Will be added after this project is publicly presented.
+
+## Sources and Resources Consulted
 * The poems of Edward de Vere were found on https://sourcetext.com/oxfords-poems/ and corroberated with http://www.oxford-shakespeare.com/oxfordspoems.html
+* Savoy, Jacques. (2013). Feature selections for authorship attribution. 939-941. 10.1145/2480362.2480541.
+* Stylistic Features Based on Sequential Rule Mining for Authorship Attribution - Mohamed Amine Boukhaled, Jean-Gabriel Ganascia, in Cognitive Approach to Natural Language Processing, 2017
+* Learning Data Mining with Python by Robert Layton 
