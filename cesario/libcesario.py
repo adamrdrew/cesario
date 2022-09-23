@@ -35,19 +35,18 @@ class LibCesario:
 
     #Run cross validation on the ensemble models
     def validate(self, split_docs):
-        print("Validating classifiers. This will take a while...")
+        results = []
         for classifier_code in self.ENSEMBLE:
             classifier_dict = get_classifier_config(classifier_code)
-            self.cross_validate_classifier(classifier_dict["class"], split_docs)
+            results.append(self.cross_validate_classifier(classifier_dict["class"], split_docs))
+        return results
 
     #Runs cross validation on a sinlge classifier
-    def cross_validate_classifier(self, classifier_class, split_docs:bool=False):
+    def cross_validate_classifier(self, classifier_class, split_docs:bool=False) -> dict:
         books, classes = Training.get_training_data(split_docs)
         classifier = classifier_class(books, classes)
         scores = classifier.cross_validate()
-        print("-----")
-        print(" Cross Validation for: " + classifier.name)
-        print(" Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+        return {"classifier": classifier.name, "mean_scores": scores, "variance": scores.std() * 2}
 
     #For a given doc get the prediction results for each classifier in the ensemble
     def get_ensemble_prediction_results(self, doc:str) -> list:

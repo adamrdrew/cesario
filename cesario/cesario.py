@@ -19,7 +19,12 @@ def cli():
 @cli.command("validate")
 @click.option('--split-docs', is_flag=True, help='On ingest, split docs to 65k character chunks.')
 def validate(split_docs):
-    lib_cesario.validate(split_docs)
+    print("Validating classifiers. This will take a while...")
+    scores = lib_cesario.validate(split_docs)
+    for score in scores:
+        print("-----")
+        print(" Cross Validation for: " + score["classifier"])
+        print(" Accuracy: %0.2f (+/- %0.2f)" % (score["mean_score"], score["variance"]))
 
 
 #Get a prediction from the ensemble for a given file or URL
